@@ -1,15 +1,16 @@
-# Bapakos
+# Backend
 
 - Local demo: [http://localhost:8000](http://localhost:8000)
 
+## How to set .env variables
+
+Please copy from [Here](https://github.com/SYNRGY-FP-C/dotenv/blob/main/fsw/backend/.env)
+
+or
+
+use your own variables
+
 ## How to run
-
-- Clone the repo
-
-```bash
-git clone git@github.com:SYNRGY-FP-C/be-express.git
-git clone https://github.com/SYNRGY-FP-C/be-express
-```
 
 - Install dependencies
 
@@ -23,35 +24,6 @@ npm install
 npm run dev
 ```
 
-## How to add new feature
+## How to contribute
 
-- Checkout to `development` branch
-
-```bash
-git checkout `development`
-```
-
-- Create new branch
-
-```bash
-git checkout -b feature/feature-name
-```
-
-- Commit your changes
-
-```bash
-git add .
-git commit -m "commit message"
-```
-
-- Pull the latest changes
-
-```bash
-git pull origin `development`
-```
-
-- Push your changes
-
-```bash
-git push origin feature/feature-name
-```
+Please read [Documentation](https://docs-fp.zekhoi.dev/contribute)
