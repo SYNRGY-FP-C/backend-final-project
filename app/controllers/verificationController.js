@@ -5,6 +5,11 @@ const request = async (req, res, next) => {
         const {email, phone_number} = req.body;
         const code = "1234";
 
+        if(!phone_number){
+            res.status(404).json({message:"Bad Request"})
+            return;
+        }
+
         if(phone_number && !email )
         await whatsappService.sendMessage(phone_number, code);
  
