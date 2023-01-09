@@ -15,7 +15,7 @@ const start = async () => {
       logger.info(`⚡️[server]: Server is running at http://localhost:${PORT}`);
     });
   } catch (error) {
-    logger.error(error);
+    logger.error(error.message);
     process.exit(1);
   }
 };
