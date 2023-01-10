@@ -2,7 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/v1/auth/register/pencari", (req, res) => {
+router.post("/v1/auth/register/pencari", (req, res) => {
   res.status(201).json({
     code: 201,
     status: "success",
@@ -13,7 +13,7 @@ router.get("/v1/auth/register/pencari", (req, res) => {
   });
 });
 
-router.get("/v1/auth/register/penyedia", (req, res) => {
+router.post("/v1/auth/register/penyedia", (req, res) => {
   res.status(201).json({
     code: 201,
     status: "success",
@@ -24,7 +24,7 @@ router.get("/v1/auth/register/penyedia", (req, res) => {
   });
 });
 
-router.get("/v1/auth/login/pencari", (req, res) => {
+router.post("/v1/auth/login/pencari", (req, res) => {
   res.status(200).json({
     code: 200,
     status: "success",
@@ -35,7 +35,7 @@ router.get("/v1/auth/login/pencari", (req, res) => {
   });
 });
 
-router.get("/v1/auth/login/penyedia", (req, res) => {
+router.post("/v1/auth/login/penyedia", (req, res) => {
   res.status(200).json({
     code: 200,
     status: "success",
