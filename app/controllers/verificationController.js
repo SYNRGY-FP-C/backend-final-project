@@ -34,8 +34,11 @@ const verify = async (req, res, next) => {
 
     console.log(email, code);
 
-    if ((!phone_number && !email) || !code || code != valid_code) {
-      res.status(404).json({ message: "Bad Request" });
+    if ((!phone_number && !email) || !code) {
+      res.status(400).json({ message: "Bad Request" });
+      return;
+    } else if (code != valid_code) {
+      res.status(422).json({ message: "Not Processed" });
       return;
     }
 
