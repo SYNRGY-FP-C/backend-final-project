@@ -1,6 +1,6 @@
 const mailer = require("../../configs/mailer.config");
 
-const sendEmail = async (email) => {
+const sendEmail = async (email, code) => {
   await mailer.sendMail({
     to: email,
     subject: "KostHub Verification",
