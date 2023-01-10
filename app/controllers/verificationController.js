@@ -1,17 +1,20 @@
 const whatsappService = require("../services/whatsapp.service");
+const emailService = require("../services/email.service");
 
 const request = async (req, res, next) => {
   try {
     const { email, phone_number } = req.body;
     const code = "1234";
 
-    if (!phone_number) {
+    if (!phone_number && !email) {
       res.status(404).json({ message: "Bad Request" });
       return;
     }
 
     if (phone_number && !email)
       await whatsappService.sendMessage(phone_number, code);
+
+    if (!phone_number && email) await emailService.sendEmail(email, code);
 
     res.status(200).json({
       code: 200,
@@ -34,8 +37,9 @@ const verify = async (req, res, next) => {
     if ((!phone_number && !email) || !code) {
       res.status(400).json({ message: "Bad Request" });
       return;
-    } else if (code != valid_code) {
-      res.status(422).json({ message: "Not Processed" });
+    }
+    if (code != valid_code) {
+      res.status(422).json({ message: "Invalid Code" });
       return;
     }
 
