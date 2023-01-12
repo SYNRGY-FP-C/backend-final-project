@@ -7,10 +7,9 @@ const notFound = (req, res) => {
 
 const appError = (err, req, res, next) => {
   console.log("Middleware Error Hadnling");
-  const errStatusCode = err.statusCode || 500;
+  const errStatusCode = err.statusCode || 400;
   const errMessage = err.message || "Something went wrong";
   res.status(errStatusCode).json({
-    code: errStatusCode,
     status: "error",
     message: errMessage,
     ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
