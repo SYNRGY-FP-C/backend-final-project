@@ -9,6 +9,7 @@ const request = async (req, res, next) => {
 
     if (!email && !phone_number) {
       res.status(400).json({
+        status: "failed",
         message: "Email or phone number required",
       });
       return;
@@ -16,27 +17,30 @@ const request = async (req, res, next) => {
 
     if (email && phone_number) {
       res.status(400).json({
+        status: "failed",
         message: "Must be email or phone number",
       });
       return;
     }
 
-    if (!validation.validateEmail(email)) {
-      res.status(400).json({
-        message: "Must be a valid email",
-      });
-      return;
+    if (phone_number && !email) {
+      if (!validation.validateEmail(email)) {
+        res.status(400).json({
+          status: "failed",
+          message: "Must be a valid email",
+        });
+        return;
+      }
+      await whatsappService.sendMessage(phone_number, code);
     }
 
-    if (phone_number && !email)
-      await whatsappService.sendMessage(phone_number, code);
-
-    if (!phone_number && email) await emailService.sendEmail(email, code);
+    if (!phone_number && email) {
+      await emailService.sendEmail(email, code);
+    }
 
     res.status(200).json({
-      code: 200,
       status: "success",
-      message: "Code sent successfully",
+      message: "Verification code has been sent successfully",
     });
   } catch (error) {
     next(error);
@@ -49,21 +53,33 @@ const verify = async (req, res, next) => {
     // const code = "1234";
     const valid_code = "1234";
 
-    console.log(email, code);
-
-    if ((!phone_number && !email) || !code) {
-      res.status(400).json({ message: "Bad Request" });
+    if (!phone_number && !email) {
+      res.status(400).json({
+        status: "failed",
+        message: "Email or phone number required",
+      });
       return;
     }
+
+    if (!code) {
+      res.status(400).json({
+        status: "failed",
+        message: "Verification code required",
+      });
+      return;
+    }
+
     if (code != valid_code) {
-      res.status(422).json({ message: "Invalid Code" });
+      res.status(400).json({
+        status: "failed",
+        message: "Invalid code",
+      });
       return;
     }
 
     res.status(200).json({
-      code: 200,
       status: "success",
-      message: "Code is correct",
+      message: "Verification succeed",
     });
   } catch (error) {
     next(error);
