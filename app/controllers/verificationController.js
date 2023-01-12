@@ -24,6 +24,10 @@ const request = async (req, res, next) => {
     }
 
     if (phone_number && !email) {
+      await whatsappService.sendMessage(phone_number, code);
+    }
+
+    if (!phone_number && email) {
       if (!validation.validateEmail(email)) {
         res.status(400).json({
           status: "failed",
@@ -31,10 +35,6 @@ const request = async (req, res, next) => {
         });
         return;
       }
-      await whatsappService.sendMessage(phone_number, code);
-    }
-
-    if (!phone_number && email) {
       await emailService.sendEmail(email, code);
     }
 
