@@ -57,7 +57,7 @@ router.get("/v1/auth/currentuser", (req, res) => {
       gender: "Male",
       occupation: "Software Developer",
       email: "zekhoi.app@gmail.com",
-      phone_number: "08986393031",
+      phone: "08986393031",
       role: "customer",
       iat: 1672224171,
     },
