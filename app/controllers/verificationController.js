@@ -4,10 +4,10 @@ const validation = require("../../utils/validation");
 
 const request = async (req, res, next) => {
   try {
-    const { email, phone_number } = req.body;
+    const { email, phone } = req.body;
     const code = "1234";
 
-    if (!email && !phone_number) {
+    if (!email && !phone) {
       res.status(400).json({
         status: "failed",
         message: "Email or phone number required",
@@ -15,7 +15,7 @@ const request = async (req, res, next) => {
       return;
     }
 
-    if (email && phone_number) {
+    if (email && phone) {
       res.status(400).json({
         status: "failed",
         message: "Must be email or phone number",
@@ -23,11 +23,11 @@ const request = async (req, res, next) => {
       return;
     }
 
-    if (phone_number && !email) {
-      await whatsappService.sendMessage(phone_number, code);
+    if (phone && !email) {
+      await whatsappService.sendMessage(phone, code);
     }
 
-    if (!phone_number && email) {
+    if (!phone && email) {
       if (!validation.validateEmail(email)) {
         res.status(400).json({
           status: "failed",
@@ -49,11 +49,11 @@ const request = async (req, res, next) => {
 
 const verify = async (req, res, next) => {
   try {
-    const { email, phone_number, code } = req.body;
+    const { email, phone, code } = req.body;
     // const code = "1234";
     const valid_code = "1234";
 
-    if (!phone_number && !email) {
+    if (!phone && !email) {
       res.status(400).json({
         status: "failed",
         message: "Email or phone number required",
