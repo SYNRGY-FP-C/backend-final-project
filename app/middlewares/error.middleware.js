@@ -1,3 +1,5 @@
+const logger = require("../../utils/logger");
+
 const notFound = (req, res) => {
   res.status(404).json({
     code: 404,
@@ -6,7 +8,7 @@ const notFound = (req, res) => {
 };
 
 const appError = (err, req, res, next) => {
-  console.log("Middleware Error Hadnling");
+  logger.error(err.message);
   const errStatusCode = err.statusCode || 400;
   const errMessage = err.message || "Something went wrong";
   res.status(errStatusCode).json({
