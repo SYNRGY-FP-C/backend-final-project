@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Account, {
+        foreignKey: "account_id",
+      });
     }
   }
   ConfirmationToken.init(
@@ -17,13 +20,23 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      createdAt: DataTypes.DATE,
-      expiresAt: DataTypes.DATE,
-      confirmedAt: DataTypes.DATE,
+      created_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      expires_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Date.now() + 300 * 1000,
+      },
+      confirmed_at: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: "ConfirmationToken",
+      modelName: "OTP",
+      tableName: "tbl_confirmation_token",
+      timestamps: false,
     }
   );
   return ConfirmationToken;
