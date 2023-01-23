@@ -1,42 +1,132 @@
-const { Account, OTP, AccountRoles } = require("../models");
+const { Account, Role, AccountRoles, UserProfile } = require("../models");
 const { generateOTP } = require("../../utils/generator");
 
 const getAll = async (req, res, next) => {
   try {
-    const { email, phone } = req.body;
-    const code = generateOTP();
-    const account = await Account.findOne({
-      where: {
-        ...(email && { email: email }),
-        ...(phone && { phone: phone }),
-      },
-      attributes: ["id"],
+    const users = await Account.findAll({
+      attributes: ["id", "email", "phone"],
+      include: [
+        {
+          model: AccountRoles,
+          required: true,
+          as: "account_role",
+          attributes: ["role_id"],
+          include: [
+            {
+              model: Role,
+              attributes: ["name"],
+              as: "role",
+            },
+          ],
+        },
+        {
+          model: UserProfile,
+          as: "profile",
+          attributes: [
+            "fullname",
+            "gender",
+            "birth_date",
+            "address",
+            "photo_url",
+            "occupation",
+          ],
+        },
+      ],
+      raw: true,
+      nest: true,
     });
 
-    const otpExists = await OTP.findOne({
-      where: {
-        account_id: account.id,
-      },
-    });
-    await otpExists.destroy();
-    // await OTP.create({
-    //   id: 1,
-    //   token: code,
-    //   account_id: account.id,
-    // });
+    const result = users.map((account) => ({
+      id: account.id,
+      email: account.email,
+      phone: account.phone,
+      role: account.account_role.role.name,
+      fullname: account.profile.fullname,
+      gender: account.profile.gender,
+      birth_date: account.profile.birth_date,
+      address: account.profile.address,
+      photo_url: account.profile.photo_url,
+      occupation: account.profile.occupation,
+    }));
+
     res.status(200).json({
-      status: 200,
+      status: "success",
       message: "OK",
-      data: {
-        account,
-        otpExists,
-      },
+      data: result,
     });
   } catch (error) {
     next(error);
   }
 };
 
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const account = await Account.findByPk(id, {
+      attributes: ["id", "email", "phone"],
+      include: [
+        {
+          model: AccountRoles,
+          required: true,
+          as: "account_role",
+          attributes: ["role_id"],
+          include: [
+            {
+              model: Role,
+              attributes: ["name"],
+              as: "role",
+            },
+          ],
+        },
+        {
+          model: UserProfile,
+          as: "profile",
+          attributes: [
+            "fullname",
+            "gender",
+            "birth_date",
+            "address",
+            "photo_url",
+            "occupation",
+          ],
+        },
+      ],
+      raw: true,
+      nest: true,
+    });
+
+    if (!account) {
+      res.status(404).json({
+        status: "failed",
+        message: "Account not found",
+      });
+      return;
+    }
+
+    const result = {
+      id: account.id,
+      email: account.email,
+      phone: account.phone,
+      role: account.account_role.role.name,
+      fullname: account.profile.fullname,
+      gender: account.profile.gender,
+      birth_date: account.profile.birth_date,
+      address: account.profile.address,
+      photo_url: account.profile.photo_url,
+      occupation: account.profile.occupation,
+    };
+
+    res.status(200).json({
+      status: "success",
+      message: "OK",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAll,
+  getById,
 };

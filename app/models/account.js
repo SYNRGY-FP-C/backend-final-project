@@ -10,11 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasOne(models.OTP, {
-        foreignKey: "id",
+        foreignKey: "account_id",
         as: "otp",
       });
       this.hasOne(models.AccountRoles, {
-        foreignKey: "role_id",
+        foreignKey: "account_id",
+        as: "account_role",
+      });
+      this.hasOne(models.UserProfile, {
+        foreignKey: "id",
+        as: "profile",
       });
     }
   }

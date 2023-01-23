@@ -15,5 +15,6 @@ router.post("/verify/request", VerificationController.request);
 router.post("/verify", VerificationController.verify);
 
 router.get("/users", UserController.getAll);
+router.get("/users/:id", UserController.getById);
 
 module.exports = router;

@@ -9,22 +9,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Account, {
+        foreignKey: "account_id",
+        as: "profile",
+      });
     }
   }
   UserProfile.init(
     {
       fullname: DataTypes.STRING,
-      birthDate: DataTypes.DATE,
+      gender: DataTypes.STRING,
+      birth_date: DataTypes.DATE,
       address: DataTypes.STRING,
-      gender: DataTypes.INTEGER,
-      job: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
-      photoUrl: DataTypes.STRING,
-      documentUrl: DataTypes.STRING,
+      photo_url: DataTypes.STRING,
+      occupation: DataTypes.STRING,
+      created_date: DataTypes.DATE,
+      is_deleted: DataTypes.BOOLEAN,
+      updated_date: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: "UserProfile",
+      tableName: "tbl_user_profile",
+      timestamps: false,
     }
   );
   return UserProfile;

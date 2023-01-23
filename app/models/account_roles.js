@@ -9,16 +9,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // this.hasOne(models.Account, {
-      //   foreignKey: "account_id",
-      // });
-      // this.hasOne(models.Role, {
-      //   foreignKey: "role_id",
-      // });
+      this.belongsTo(models.Account, {
+        foreignKey: "account_id",
+      });
+      this.belongsTo(models.Role, {
+        foreignKey: "role_id",
+        as: "role",
+      });
     }
   }
   AccountRoles.init(
-    {},
+    {
+      account_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
+      role_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+      },
+    },
     {
       sequelize,
       modelName: "AccountRoles",
