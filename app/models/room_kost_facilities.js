@@ -3,25 +3,14 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Room extends Model {
     static associate(models) {
-      // Room.hasMany(models.Rating);
-      // Room.belongsTo(models.Account,{
-      //   foreignKey: 'owner_id'
-      // });
-      // // Room.hasOne(models.Room_Image);
-      // // Room.belongsTo(models.Kost);
-      // // Room.belongsTo(models.Additional_Facility);
-      // // Room.hasOne(models.Thumbnail);
-      // // Room.belongsToMany(models.Facility);
+      Room.hasMany(models.Rating);
+      Room.belongsTo(models.Account,{
+        foreignKey: 'owner_id'
+      });
     }
   }
   Room.init(
     {
-      id:{
-        type: DataTypes.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-        allowNull:false,
-    },
     // room_image_id: DataTypes.INTEGER,
     // additional_facility_id: DataTypes.INTEGER,
     // facility_id: DataTypes.INTEGER,
@@ -52,9 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       tableName:'tbl_room',
       modelName:'Room',
-      underscored: true,
-      createdAt:false,
-      updatedAt:false
+      timestamps:false,
     }
   );
   return Room;
