@@ -18,7 +18,7 @@ describe("Test API Verification", () => {
 
     it("should respond with a 200 status code", async () => {
       await request(app)
-        .post("/api/verify/request")
+        .post("/v1/verify/request")
         .send({
           email: account.email,
         })
@@ -27,7 +27,7 @@ describe("Test API Verification", () => {
 
     it("should respond with a 200 status code", async () => {
       await request(app)
-        .post("/api/verify/request")
+        .post("/v1/verify/request")
         .send({
           phone: account.phone,
         })
@@ -50,7 +50,7 @@ describe("Test API Verification", () => {
       });
 
       await request(app)
-        .post("/api/verify")
+        .post("/v1/verify")
         .send({
           email: account.email,
           code: code,
@@ -72,7 +72,7 @@ describe("Test API Verification", () => {
       });
 
       await request(app)
-        .post("/api/verify")
+        .post("/v1/verify")
         .send({
           phone: account.phone,
           code: code,

@@ -3,25 +3,25 @@ const request = require('supertest');
 const { Room } = require('../../app/models'); 
 
 
-describe('GET /api/v1/room',() => {
+describe('GET /v1/room',() => {
     it('return 200 ok', async() => {
         await request(app)
-        .get('/api/v1/room')
+        .get('/v1/room')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200)
     });
 });
 
-describe('GET /api/v1/room/:id',() => {
+describe('GET /v1/room/:id',() => {
     it('return 200 ok get ID', async() => {
         await request(app)
-        .get('/api/v1/room/4')
+        .get('/v1/room/1')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200)
     });
 });
 
-describe('POST /api/v1/room',() => {
+describe('POST /v1/room',() => {
     it('return 201 created ok', async () => {
         const payload = {
             owner_id :null,
@@ -38,14 +38,14 @@ describe('POST /api/v1/room',() => {
             available_room:0
         };
         await request(app)
-        .post('/api/v1/room')
+        .post('/v1/room')
         .send(payload)
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(201)
     });
 });
 
-describe('PUT /api/v1/room/:id',() => {
+describe('PUT /v1/room/:id',() => {
     it('return 200 updated OK', async () => {
         const payloadCreate = {
             owner_id :null,
@@ -79,14 +79,14 @@ describe('PUT /api/v1/room/:id',() => {
 
         const room = await Room.create(payloadCreate);
         await request(app)
-        .put('/api/v1/room/'+ room.id)
+        .put('/v1/room/'+ room.id)
         .send(payloadUpdate)
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200)
     });
 });
 
-describe('DELETE /api/v1/room/:id', () => {
+describe('DELETE /v1/room/:id', () => {
     it('respond 204 Delete OK', async () => {
         const room = await Room.create({
             owner_id :null,
@@ -103,7 +103,7 @@ describe('DELETE /api/v1/room/:id', () => {
             available_room:0
         });
         request(app)
-        .delete('/api/v1/room/' + room.id)
+        .delete('/v1/room/' + room.id)
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(204);
     });
