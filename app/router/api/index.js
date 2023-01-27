@@ -21,8 +21,8 @@ router.get("/users/:id", UserController.getById);
 //Kamar
 router.get('/rooms', RoomController.getAllRooms);
 router.post('/rooms', RoomController.storeRooms);
-router.get('rooms/:roomId', RoomController.getByIdRooms);
-router.put('rooms/:roomId', RoomController.UpdateRooms);
-router.delete('rooms/:roomId', RoomController.deleteRooms);
+router.get('/rooms/:roomId', RoomController.getByIdRooms);
+router.put('/rooms/:roomId', RoomController.UpdateRooms);
+router.delete('/rooms/:roomId', RoomController.deleteRooms);
 
 module.exports = router;

@@ -3,21 +3,21 @@ const request = require('supertest');
 const { Room } = require('../../app/models'); 
 
 
-describe('GET /v1/room',() => {
-    it('return 200 ok', async() => {
-        await request(app)
-        .get('/v1/room')
+describe('GET /v1/rooms',() => {
+    it('return 200 ok', (done) => {
+         request(app)
+        .get('/v1/rooms')
         .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200)
+        .expect(200,done)
     });
 });
 
-describe('GET /v1/room/:id',() => {
-    it('return 200 ok get ID', async() => {
-        await request(app)
-        .get('/v1/room/1')
+describe('GET /v1/rooms/:id',() => {
+    it('return 200 ok get ID', (done) => {
+        request(app)
+        .get('/v1/rooms/1')
         .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200)
+        .expect(200, done)
     });
 });
 
