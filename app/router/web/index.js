@@ -7,8 +7,8 @@ const {
   Account,
   AccountRoles,
   KostFacilities,
-  KostPaymentScheme,
-  Roles,
+  KostPaymentSchemes,
+  Role,
 } = require("../../models")
 
 const getAllAccount = async (req,res, next) => {
@@ -50,9 +50,9 @@ const getAllKostFacilities = async (req,res, next) => {
   }
 }
 
-const getAllKostPaymentScheme = async (req,res, next) => {
+const getAllKostPaymentSchemes = async (req,res, next) => {
   try {
-    const data = await KostPaymentScheme.findAll()
+    const data = await KostPaymentSchemes.findAll()
     return res.status(200).json({
       status: "success",
       message: "OK",
@@ -63,9 +63,9 @@ const getAllKostPaymentScheme = async (req,res, next) => {
   }
 }
 
-const getAllRoles = async (req,res, next) => {
+const getAllRole = async (req,res, next) => {
   try {
-    const data = await Roles.findAll()
+    const data = await Role.findAll()
     return res.status(200).json({
       status: "success",
       message: "OK",
@@ -79,7 +79,7 @@ const getAllRoles = async (req,res, next) => {
 router.get("/getallaccount", (getAllAccount));
 router.get("/getallaccountroles", (getAllAccountRoles));
 router.get("/getallkostfacilities", (getAllKostFacilities));
-router.get("/getallkostpaymentscheme", (getAllKostPaymentScheme));
-router.get("/getallroles", (getAllRoles));
+router.get("/getallkostpaymentschemes", (getAllKostPaymentSchemes));
+router.get("/getallrole", (getAllRole));
 
 module.exports = router;
