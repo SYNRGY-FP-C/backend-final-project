@@ -8,6 +8,7 @@ const {
   AccountRoles,
   KostFacilities,
   KostPaymentSchemes,
+  KostRules,
   Role,
 } = require("../../models")
 
@@ -63,6 +64,19 @@ const getAllKostPaymentSchemes = async (req,res, next) => {
   }
 }
 
+const getAllKostRules = async (req,res, next) => {
+  try {
+    const data = await KostRules.findAll()
+    return res.status(200).json({
+      status: "success",
+      message: "OK",
+      data: data
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
 const getAllRole = async (req,res, next) => {
   try {
     const data = await Role.findAll()
@@ -80,6 +94,7 @@ router.get("/getallaccount", (getAllAccount));
 router.get("/getallaccountroles", (getAllAccountRoles));
 router.get("/getallkostfacilities", (getAllKostFacilities));
 router.get("/getallkostpaymentschemes", (getAllKostPaymentSchemes));
+router.get("/getallkostrules", (getAllKostRules));
 router.get("/getallrole", (getAllRole));
 
 module.exports = router;
