@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Account extends Model {
+  class AccountRoles extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,31 +11,25 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Account.init(
+  AccountRoles.init(
     {
-      email: {
-        type: DataTypes.STRING,
+      account_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      password: {
-        type: DataTypes.STRING,
+      role_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-      },
-      phone: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      verified: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
       },
     },
     {
       sequelize,
-      modelName: "Account",
-      tableName: "account",
-      timestamps:false
+      modelName: "AccountRoles",
+      tableName: "account_roles",
+      timestamps:false,
+      
     }
   );
-  return Account;
+  AccountRoles.removeAttribute('id')
+  return AccountRoles;
 };
