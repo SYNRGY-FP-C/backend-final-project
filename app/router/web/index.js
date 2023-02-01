@@ -17,7 +17,7 @@ const {
 
 const getAllAccount = async (req,res, next) => {
   try {
-    const data = await AccountRoles.findAll()
+    const data = await Account.findAll()
     return res.status(200).json({
       status: "success",
       message: "OK",

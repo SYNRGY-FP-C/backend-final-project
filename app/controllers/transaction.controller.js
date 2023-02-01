@@ -1,46 +1,17 @@
+const {
+  Transaction
+} = require("../models")
 
-const request = async (req, res, next) => {
+const getAll = async (req, res, next) => {
   try {
-    const { email, phone } = req.body;
-    const code = "1234";
-
-    if (!email && !phone) {
-      res.status(400).json({
-        status: "failed",
-        message: "Email or phone number required",
-      });
-      return;
-    }
-
-    if (email && phone) {
-      res.status(400).json({
-        status: "failed",
-        message: "Must be email or phone number",
-      });
-      return;
-    }
-
-    if (phone && !email) {
-      await whatsappService.sendMessage(phone, code);
-    }
-
-    if (!phone && email) {
-      if (!validation.validateEmail(email)) {
-        res.status(400).json({
-          status: "failed",
-          message: "Must be a valid email",
-        });
-        return;
-      }
-      await emailService.sendEmail(email, code);
-    }
-
-    res.status(200).json({
+    const data = await Transaction.findAll()
+    return res.status(200).json({
       status: "success",
-      message: "Verification code has been sent successfully",
-    });
-  } catch (error) {
-    next(error);
+      message: "OK",
+      data: data
+    })
+  } catch (err) {
+    next(err)
   }
 };
 
@@ -84,6 +55,6 @@ const verify = async (req, res, next) => {
 };
 
 module.exports = {
-  request,
+  getAll,
   verify,
 };

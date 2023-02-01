@@ -1,5 +1,6 @@
 const VerificationController = require("../../controllers/verification.controller");
 const UserController = require("../../controllers/user.controller");
+const Transaction = require("../../controllers/transaction.controller");
 
 const express = require("express");
 
@@ -16,5 +17,7 @@ router.post("/verify", VerificationController.verify);
 
 router.get("/users", UserController.getAll);
 router.get("/users/:id", UserController.getById);
+
+router.get("/transactions", Transaction.getAll);
 
 module.exports = router;
