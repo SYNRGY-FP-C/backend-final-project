@@ -11,6 +11,7 @@ const {
   KostRules,
   Role,
   RoomImage,
+  RoomKostFacilities,
 } = require("../../models")
 
 const getAllAccount = async (req,res, next) => {
@@ -104,6 +105,19 @@ const getAllRoomImage = async (req,res, next) => {
   }
 }
 
+const getAllRoomKostFacilities = async (req,res, next) => {
+  try {
+    const data = await RoomKostFacilities.findAll()
+    return res.status(200).json({
+      status: "success",
+      message: "OK",
+      data: data
+    })
+  } catch (err) {
+    next(err)
+  }
+}
+
 router.get("/getallaccount", (getAllAccount));
 router.get("/getallaccountroles", (getAllAccountRoles));
 router.get("/getallkostfacilities", (getAllKostFacilities));
@@ -111,5 +125,6 @@ router.get("/getallkostpaymentschemes", (getAllKostPaymentSchemes));
 router.get("/getallkostrules", (getAllKostRules));
 router.get("/getallrole", (getAllRole));
 router.get("/getallroomimage", (getAllRoomImage));
+router.get("/getallroomkostfacilities", (getAllRoomKostFacilities));
 
 module.exports = router;
