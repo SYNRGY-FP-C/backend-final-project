@@ -1,4 +1,5 @@
-const verificationController = require("../../controllers/verificationController");
+const VerificationController = require("../../controllers/verification.controller");
+const UserController = require("../../controllers/user.controller");
 
 const express = require("express");
 
@@ -10,7 +11,10 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/verify/request", verificationController.request);
-router.post("/verify", verificationController.verify);
+router.post("/verify/request", VerificationController.request);
+router.post("/verify", VerificationController.verify);
+
+router.get("/users", UserController.getAll);
+router.get("/users/:id", UserController.getById);
 
 module.exports = router;

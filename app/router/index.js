@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use(mockAPI);
 router.use(webRouter);
-router.use("/api", apiRouter);
+router.use("/v1", apiRouter);
 
 router.use(errorHandler.notFound);
 router.use(errorHandler.appError);

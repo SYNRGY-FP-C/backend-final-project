@@ -9,6 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.OTP, {
+        foreignKey: "account_id",
+        as: "otp",
+      });
+      this.hasOne(models.AccountRoles, {
+        foreignKey: "account_id",
+        as: "account_role",
+      });
+      this.hasOne(models.UserProfile, {
+        foreignKey: "id",
+        as: "profile",
+      });
     }
   }
   Account.init(
@@ -34,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Account",
       tableName: "account",
-      timestamps:false
+      timestamps: false,
     }
   );
   return Account;
