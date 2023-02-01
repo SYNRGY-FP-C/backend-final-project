@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class ConfirmationToken extends Model {
+  class AccountRoles extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,32 +12,33 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Account, {
         foreignKey: "account_id",
       });
+      this.belongsTo(models.Role, {
+        foreignKey: "role_id",
+        as: "role",
+      });
     }
   }
-  ConfirmationToken.init(
+  AccountRoles.init(
     {
-      token: {
-        type: DataTypes.STRING,
+      account_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
       },
-      created_at: {
-        type: DataTypes.DATE,
+      role_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
       },
-      expires_at: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: Date.now() + 300 * 1000,
-      },
-      confirmed_at: DataTypes.DATE,
     },
     {
       sequelize,
-      modelName: "OTP",
-      tableName: "tbl_confirmation_token",
+      modelName: "AccountRoles",
+      tableName: "account_roles",
       timestamps: false,
     }
   );
-  return ConfirmationToken;
+  return AccountRoles;
 };

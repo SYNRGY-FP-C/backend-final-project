@@ -1,4 +1,6 @@
-const verificationController = require("../../controllers/verificationController");
+const VerificationController = require("../../controllers/verification.controller");
+const UserController = require("../../controllers/user.controller");
+const Transaction = require("../../controllers/transaction.controller");
 
 const express = require("express");
 
@@ -10,7 +12,14 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/verify/request", verificationController.request);
-router.post("/verify", verificationController.verify);
+router.post("/verify/request", VerificationController.request);
+router.post("/verify", VerificationController.verify);
+
+router.get("/users", UserController.getAll);
+router.get("/users/:id", UserController.getById);
+
+router.get("/transactions", Transaction.getAll);
+router.get("/transactions/:id", Transaction.getById);
+router.put("/transactions/:id", Transaction.updateStatusById);
 
 module.exports = router;

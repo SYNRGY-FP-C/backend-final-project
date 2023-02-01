@@ -9,11 +9,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasOne(models.OTP, {
+        foreignKey: "account_id",
+        as: "otp",
+      });
+      this.hasOne(models.AccountRoles, {
+        foreignKey: "account_id",
+        as: "account_role",
+      });
+      this.hasOne(models.UserProfile, {
+        foreignKey: "id",
+        as: "profile",
+      });
     }
   }
   Account.init(
     {
-      username: DataTypes.STRING,
       email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -22,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      phoneNumber: {
+      phone: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -34,6 +45,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Account",
+      tableName: "account",
+      timestamps: false,
     }
   );
   return Account;
