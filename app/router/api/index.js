@@ -19,5 +19,7 @@ router.get("/users", UserController.getAll);
 router.get("/users/:id", UserController.getById);
 
 router.get("/transactions", Transaction.getAll);
+router.get("/transactions/:id", Transaction.getById);
+router.put("/transactions/:id", Transaction.updateStatusById);
 
 module.exports = router;

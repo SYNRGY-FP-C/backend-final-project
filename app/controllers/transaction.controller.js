@@ -1,5 +1,5 @@
 const {
-  Transaction
+  Transaction,
 } = require("../models")
 
 const getAll = async (req, res, next) => {
@@ -15,39 +15,53 @@ const getAll = async (req, res, next) => {
   }
 };
 
-const verify = async (req, res, next) => {
+const getById = async (req, res, next) => {
+  const id = req.params.id
   try {
-    const { email, phone, code } = req.body;
-    // const code = "1234";
-    const valid_code = "1234";
+    const data = await Transaction.findByPk(id)
 
-    if (!phone && !email) {
-      res.status(400).json({
+    if (!data) {
+      res.status(404).json({
         status: "failed",
-        message: "Email or phone number required",
+        message: "ID is not found!",
       });
       return;
     }
 
-    if (!code) {
-      res.status(400).json({
-        status: "failed",
-        message: "Verification code required",
-      });
-      return;
-    }
+    return res.status(200).json({
+      status: "success",
+      message: "OK",
+      data: data
+    })
+  } catch (err) {
+    next(err)
+  }
+};
 
-    if (code != valid_code) {
+const updateStatusById = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    const id = req.params.id;
+
+    if (!status) {
       res.status(400).json({
         status: "failed",
-        message: "Invalid code",
+        message: "Status is required!",
       });
       return;
     }
+    await Transaction.update(
+      {
+        status,
+      },
+      {
+        where: { id:id }
+      }
+    )
 
     res.status(200).json({
       status: "success",
-      message: "Verification succeed",
+      message: "Transaction status is updated",
     });
   } catch (error) {
     next(error);
@@ -56,5 +70,6 @@ const verify = async (req, res, next) => {
 
 module.exports = {
   getAll,
-  verify,
+  getById,
+  updateStatusById,
 };
