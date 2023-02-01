@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       length: DataTypes.FLOAT,
       quantity: DataTypes.INTEGER,
       available_room: DataTypes.INTEGER,
+      max_person: DataTypes.INTEGER,
       is_available:DataTypes.BOOLEAN,
       is_deleted:DataTypes.BOOLEAN,
       created_date:DataTypes.DATE,

@@ -3,7 +3,24 @@ const Room = models.Room;
 
 const getAllRooms = async (req, res, next) => {
   try {
-    const rooms = await Room.findAll();
+    const pageAsNumber = Number.parseInt(req.query.page);
+    const sizeAsNumber = Number.parseInt(req.query.size);
+    let page = 0;
+    if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+      page = pageAsNumber;
+    }
+    let size = 10;
+    if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10){
+      size = sizeAsNumber;
+    }
+
+    const rooms = await Room.findAll({
+      attributes : [
+        'id','name','label','price'
+      ],
+      limit : size,
+      offset : page * size
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",
@@ -49,7 +66,6 @@ const storeRooms = async (req, res, next) => {
       !length ||
       !quantity ||
       !available_room ||
-      !is_available ||
       !indoor_bathroom ||
       is_deleted
     ) {
@@ -196,7 +212,7 @@ const deleteRooms = async (req, res, next) => {
         message: `Data ${roomId} not found!`,
       });
     }
-    await Room.delete({
+    await Room.destroy({
       where: {
         id: roomId,
       },

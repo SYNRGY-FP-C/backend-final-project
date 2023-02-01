@@ -1,28 +1,27 @@
 const app = require('../../app');
 const request = require('supertest');
-const models = require("../../app/models");
-const Room = models.Room;
+const { Kost } = require('../../app/models'); 
 
 
-describe('GET /v1/rooms',() => {
+describe('GET /v1/kosts',() => {
     it('return 200 ok', (done) => {
          request(app)
-        .get('/v1/rooms')
+        .get('/v1/kosts')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200,done)
     });
 });
 
-describe('GET /v1/rooms/:roomId',() => {
+describe('GET /v1/kosts/:id',() => {
     it('return 200 ok get ID', (done) => {
         request(app)
-        .get('/v1/rooms/1')
+        .get('/v1/kosts/1')
         .expect('Content-Type', 'application/json; charset=utf-8')
         .expect(200, done)
     });
 });
 
-// describe('DELETE /v1/rooms/:roomId', () => {
+// describe('DELETE /v1/room/:id', () => {
 //     it('respond 204 Delete OK', async () => {
 //         const room = await Room.create({
 //             owner_id :null,
@@ -35,14 +34,12 @@ describe('GET /v1/rooms/:roomId',() => {
 //             capacity: null,
 //             width:null,
 //             length:null,
-//             label:"label",
 //             quantity:2,
-//             max_person:5,
-//             available_room:0,
-//             created_date: new Date()
+//             available_room:0
 //         });
-//         await request(app)
-//         .delete('/v1/rooms/' + room.id)
+//         request(app)
+//         .delete('/v1/room/' + room.id)
+//         .expect('Content-Type', 'application/json; charset=utf-8')
 //         .expect(204);
 //     });
 // });
