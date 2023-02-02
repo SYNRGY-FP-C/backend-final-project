@@ -9,6 +9,7 @@ on:
     branches: ["development"]
 
 env:
+  NODE_ENV: "development"
   JWT_SECRET: ${{ secrets.JWT_SECRET }}
   DB_HOST: ${{ secrets.DB_HOST }}
   DB_USER: ${{ secrets.DB_USER }}
