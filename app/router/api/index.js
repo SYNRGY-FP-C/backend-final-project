@@ -6,6 +6,7 @@ const {
   isAuthenticated,
 } = require("../../middlewares/auth.middleware");
 const { ROLE_SUPERADMIN, ROLE_ADMIN } = require("../../../constants/roles");
+const Transaction = require("../../controllers/transaction.controller");
 
 const express = require("express");
 
@@ -45,5 +46,9 @@ router.get(
   isAuthorized([ROLE_ADMIN]),
   StatisticController.getAll
 );
+
+router.get("/transactions", Transaction.getAll);
+router.get("/transactions/:id", Transaction.getById);
+router.put("/transactions/:id", Transaction.updateStatusById);
 
 module.exports = router;
