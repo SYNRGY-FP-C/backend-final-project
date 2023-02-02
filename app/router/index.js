@@ -12,8 +12,8 @@ const mockAPI = require("./mock");
 
 const router = express.Router();
 
-router.use(isAuthenticated);
-router.use(isAuthorized([ROLE_SUPERADMIN]));
+// router.use(isAuthenticated);
+// router.use(isAuthorized([ROLE_SUPERADMIN]));
 
 router.use(mockAPI);
 router.use(webRouter);
