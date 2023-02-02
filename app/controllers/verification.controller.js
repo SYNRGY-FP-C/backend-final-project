@@ -56,24 +56,14 @@ const request = async (req, res, next) => {
       },
     });
 
-    if (otpExists?.confirmed_at) {
-      res.status(422).json({
-        status: "failed",
-        message: "Account already confirmed",
-      });
-      return;
-    }
-
     if (otpExists) {
       await otpExists.destroy();
     }
 
-    console.log("otpExists");
     await OTP.create({
       token: encrypt(code),
       account_id: account.id,
     });
-    console.log("otpExists");
 
     if (phone && !email) {
       await whatsappService.sendMessage(phone, code);
