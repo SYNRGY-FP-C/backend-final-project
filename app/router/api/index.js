@@ -2,6 +2,7 @@ const VerificationController = require("../../controllers/verification.controlle
 const UserController = require("../../controllers/user.controller");
 const TransactionController = require("../../controllers/transaction.controller");
 const RuleController = require("../../controllers/rule.controller");
+const FacilityController = require("../../controllers/facility.controller");
 
 const express = require("express");
 
@@ -27,5 +28,17 @@ router.post("/rules", RuleController.create);
 router.get("/rules", RuleController.getAll);
 router.get("/rules/:id", RuleController.getById);
 router.put("/rules/:id", RuleController.update);
+
+// Facility
+// Kost
+router.post("/facilities/kost", FacilityController.createKostFacility);
+router.get("/facilities/kost", FacilityController.getAllKostFacilities);
+router.get("/facilities/kost/:id", FacilityController.getByIdKostFacility);
+router.put("/facilities/kost/:id", FacilityController.updateKostFacility);
+// Room
+router.post("/facilities/room", FacilityController.createRoomFacility);
+router.get("/facilities/room", FacilityController.getAllRoomFacilities);
+router.get("/facilities/room/:id", FacilityController.getByIdRoomFacility);
+router.put("/facilities/room/:id", FacilityController.updateRoomFacility);
 
 module.exports = router;
