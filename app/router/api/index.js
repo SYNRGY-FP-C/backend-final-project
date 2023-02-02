@@ -1,7 +1,7 @@
 const VerificationController = require("../../controllers/verification.controller");
 const UserController = require("../../controllers/user.controller");
-const RoomController = require('../../controllers/room.controller');
-const KostController = require('../../controllers/kost.controller');
+const RoomController = require("../../controllers/room.controller");
+const KostController = require("../../controllers/kost.controller");
 const StatisticController = require("../../controllers/statistic.controller");
 const TransactionController = require("../../controllers/transaction.controller");
 
@@ -72,15 +72,55 @@ router.put(
 );
 
 //Kamar
-router.get('/rooms', RoomController.getAllRooms);
-router.post('/rooms', RoomController.storeRooms);
-router.get('/rooms/:roomId', RoomController.getByIdRooms);
-router.put('/rooms/:roomId', RoomController.UpdateRooms);
-router.delete('/rooms/:roomId', RoomController.deleteRooms);
+router.get(
+  "/rooms",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  RoomController.getAllRooms
+);
+router.post(
+  "/rooms",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  RoomController.storeRooms
+);
+router.get(
+  "/rooms/:roomId",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  RoomController.getByIdRooms
+);
+router.put(
+  "/rooms/:roomId",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  RoomController.UpdateRooms
+);
+router.delete(
+  "/rooms/:roomId",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  RoomController.deleteRooms
+);
 
 //Kost
-router.get('/kosts', KostController.getAllKost);
-router.get('/kosts/:kostId', KostController.getByIdKost);
-router.delete('/kosts/:kostId', KostController.deleteKosts);
+router.get(
+  "/kosts",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  KostController.getAllKost
+);
+router.get(
+  "/kosts/:kostId",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  KostController.getByIdKost
+);
+router.delete(
+  "/kosts/:kostId",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  KostController.deleteKosts
+);
 
 module.exports = router;
