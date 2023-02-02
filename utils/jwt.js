@@ -5,8 +5,12 @@ const generateToken = (user) => {
   return jwt.sign(user, JWT_SECRET, { expiresIn: "1d" });
 };
 
-export const verifyAccessToken = (token) => {
+const verifyAccessToken = (token) => {
   return jwt.verify(token, JWT_SECRET);
 };
 
-module.exports = { generateToken, verifyAccessToken };
+const decodeToken = (token) => {
+  return jwt.decode(token);
+};
+
+module.exports = { generateToken, decodeToken, verifyAccessToken };

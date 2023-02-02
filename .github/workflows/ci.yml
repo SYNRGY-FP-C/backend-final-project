@@ -8,6 +8,19 @@ on:
   pull_request:
     branches: ["development"]
 
+env:
+  NODE_ENV: "development"
+  JWT_SECRET: ${{ secrets.JWT_SECRET }}
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  DB_DIALECT: ${{ secrets.DB_DIALECT }}
+  WA_SERVICE_URL: ${{ secrets.WA_SERVICE_URL }}
+  WA_SERVICE_TOKEN: ${{ secrets.WA_SERVICE_TOKEN }}
+  MAILER_SENDER_EMAIL: ${{ secrets.MAILER_SENDER_EMAIL }}
+  MAILER_SENDER_PASSWORD: ${{ secrets.MAILER_SENDER_PASSWORD }}
+
 jobs:
   linttest:
     name: Lint and Test
