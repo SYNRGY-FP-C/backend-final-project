@@ -1,0 +1,11 @@
+const ROLE_USER = "ROLE_USER_PENCARI";
+
+const ROLE_ADMIN = "ROLE_USER_PEMILIK";
+
+const ROLE_SUPERADMIN = "ROLE_SUPERUSER";
+
+module.exports = {
+  ROLE_USER,
+  ROLE_ADMIN,
+  ROLE_SUPERADMIN,
+};
