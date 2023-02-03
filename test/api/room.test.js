@@ -1,25 +1,24 @@
-const app = require('../../app');
-const request = require('supertest');
+const app = require("../../app");
+const request = require("supertest");
 const models = require("../../app/models");
 const Room = models.Room;
 
-
-describe('GET /v1/rooms',() => {
-    it('return 200 ok', (done) => {
-         request(app)
-        .get('/v1/rooms')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200,done)
-    });
+describe("GET /v1/rooms", () => {
+  it("return 200 ok", (done) => {
+    request(app)
+      .get("/v1/rooms")
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .expect(200, done);
+  });
 });
 
-describe('GET /v1/rooms/:roomId',() => {
-    it('return 200 ok get ID', (done) => {
-        request(app)
-        .get('/v1/rooms/1')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200, done)
-    });
+describe("GET /v1/rooms/:roomId", () => {
+  it("return 200 ok get ID", (done) => {
+    request(app)
+      .get("/v1/rooms/1")
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .expect(200, done);
+  });
 });
 
 // describe('DELETE /v1/rooms/:roomId', () => {
