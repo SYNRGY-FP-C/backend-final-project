@@ -1,17 +1,17 @@
-const { Account } = require("../models");
+const { Account, Kost, Transaction, Room } = require("../models");
 
 const getAll = async (req, res, next) => {
   try {
     const users = await Account.count();
-    // const users = await Account.count();
-    // const users = await Account.count();
-    // const users = await Account.count();
+    const kosts = await Kost.count();
+    const rooms = await Room.count();
+    const transactions = await Transaction.count();
 
     const result = {
       users: users,
-      // flats:,
-      // rooms:,
-      // transactions:,
+      kosts: kosts,
+      rooms: rooms,
+      transactions: transactions,
     };
 
     res.status(200).json({
