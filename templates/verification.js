@@ -1,5 +1,5 @@
 const createTemplate = (email) => {
-    return `
+  return `
     <!DOCTYPE html>
     <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
     <head>
@@ -101,9 +101,8 @@ const createTemplate = (email) => {
       </div>
     </body>
     </html>`;
-  };
-  
-  module.exports = {
-    createTemplate,
-  };
-  
+};
+
+module.exports = {
+  createTemplate,
+};

@@ -1,24 +1,23 @@
-const app = require('../../app');
-const request = require('supertest');
-const { Kost } = require('../../app/models'); 
+const app = require("../../app");
+const request = require("supertest");
+const { Kost } = require("../../app/models");
 
-
-describe('GET /v1/kosts',() => {
-    it('return 200 ok', (done) => {
-         request(app)
-        .get('/v1/kosts')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200,done)
-    });
+describe("GET /v1/kosts", () => {
+  it("return 200 ok", (done) => {
+    request(app)
+      .get("/v1/kosts")
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .expect(200, done);
+  });
 });
 
-describe('GET /v1/kosts/:id',() => {
-    it('return 200 ok get ID', (done) => {
-        request(app)
-        .get('/v1/kosts/1')
-        .expect('Content-Type', 'application/json; charset=utf-8')
-        .expect(200, done)
-    });
+describe("GET /v1/kosts/:id", () => {
+  it("return 200 ok get ID", (done) => {
+    request(app)
+      .get("/v1/kosts/1")
+      .expect("Content-Type", "application/json; charset=utf-8")
+      .expect(200, done);
+  });
 });
 
 // describe('DELETE /v1/room/:id', () => {
