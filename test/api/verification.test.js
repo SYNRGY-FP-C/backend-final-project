@@ -6,16 +6,15 @@ const { encrypt } = require("../../utils/bcrypt");
 const { generateOTP } = require("../../utils/generator");
 
 describe("Test API Verification", () => {
-  describe("POST /verify/request => Request OTP", () => {
-    let account;
-    beforeAll(async () => {
-      account = await Account.create({
-        email: faker.internet.email(),
-        phone: faker.phone.number(),
-        password: encrypt(faker.internet.password()),
-      });
+  let account;
+  beforeAll(async () => {
+    account = await Account.create({
+      email: faker.internet.email(),
+      phone: faker.phone.number(),
+      password: encrypt(faker.internet.password()),
     });
-
+  });
+  describe("POST /verify/request => Request OTP", () => {
     it("should respond with a 200 status code", async () => {
       await request(app)
         .post("/v1/verify/request")
@@ -35,14 +34,13 @@ describe("Test API Verification", () => {
     });
   });
 
-  describe("POST /verify/request => Request OTP", () => {
+  describe("POST /verify => Verify OTP", () => {
     it("should respond with a 200 status code", async () => {
-      const account = await Account.create({
+      account = await Account.create({
         email: faker.internet.email(),
         phone: faker.phone.number(),
         password: encrypt(faker.internet.password()),
       });
-
       const code = generateOTP();
       await OTP.create({
         token: encrypt(code),

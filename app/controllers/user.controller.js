@@ -3,7 +3,7 @@ const { generateOTP } = require("../../utils/generator");
 
 const getAll = async (req, res, next) => {
   try {
-    const { page, size } = req.query;
+    const { page = 1, size = 5 } = req.query;
     const users = await Account.findAll({
       attributes: ["id", "email", "phone"],
       include: [
