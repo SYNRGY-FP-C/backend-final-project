@@ -1,22 +1,24 @@
-const { Transaction } = require("../models");
+const {
+  Transaction,
+} = require("../models")
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await Transaction.findAll();
+    const data = await Transaction.findAll()
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data,
-    });
+      data: data
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
 };
 
 const getById = async (req, res, next) => {
-  const id = req.params.id;
+  const id = req.params.id
   try {
-    const data = await Transaction.findByPk(id);
+    const data = await Transaction.findByPk(id)
 
     if (!data) {
       res.status(404).json({
@@ -29,10 +31,10 @@ const getById = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data,
-    });
+      data: data
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
 };
 
@@ -53,9 +55,9 @@ const updateStatusById = async (req, res, next) => {
         status,
       },
       {
-        where: { id: id },
+        where: { id:id }
       }
-    );
+    )
 
     res.status(200).json({
       status: "success",
