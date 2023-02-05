@@ -23,13 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       account_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        type: DataTypes.INTEGER,
         primaryKey: true,
       },
       role_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        type: DataTypes.INTEGER,
         primaryKey: true,
       },
     },

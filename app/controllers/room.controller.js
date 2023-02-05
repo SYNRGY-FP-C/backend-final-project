@@ -6,20 +6,18 @@ const getAllRooms = async (req, res, next) => {
     const pageAsNumber = Number.parseInt(req.query.page);
     const sizeAsNumber = Number.parseInt(req.query.size);
     let page = 0;
-    if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
       page = pageAsNumber;
     }
     let size = 10;
-    if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10){
+    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
       size = sizeAsNumber;
     }
 
     const rooms = await Room.findAll({
-      attributes : [
-        'id','name','label','price'
-      ],
-      limit : size,
-      offset : page * size
+      attributes: ["id", "name", "label", "price"],
+      limit: size,
+      offset: page * size,
     });
     return res.status(200).json({
       status: "success",
@@ -97,7 +95,7 @@ const storeRooms = async (req, res, next) => {
       data: rooms,
     });
   } catch (error) {
-   next(error);
+    next(error);
   }
 };
 const getByIdRooms = async (req, res, next) => {
