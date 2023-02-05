@@ -1,8 +1,15 @@
 const VerificationController = require("../../controllers/verification.controller");
 const UserController = require("../../controllers/user.controller");
+const StatisticController = require("../../controllers/statistic.controller");
 const TransactionController = require("../../controllers/transaction.controller");
-const RuleController = require("../../controllers/rule.controller");
-const FacilityController = require("../../controllers/facility.controller");
+
+const {
+  isAuthorized,
+  isAuthenticated,
+} = require("../../middlewares/auth.middleware");
+const { ROLE_SUPERADMIN, ROLE_ADMIN } = require("../../../constants/roles");
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const express = require("express");
 
@@ -17,28 +24,49 @@ router.get("/", (req, res) => {
 router.post("/verify/request", VerificationController.request);
 router.post("/verify", VerificationController.verify);
 
-router.get("/users", UserController.getAll);
-router.get("/users/:id", UserController.getById);
+router.get(
+  "/users",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  UserController.getAll
+);
+router.get(
+  "/users/:id",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  UserController.getById
+);
 
-router.get("/transactions", TransactionController.getAll);
-router.get("/transactions/:id", TransactionController.getById);
-router.put("/transactions/:id", TransactionController.updateStatusById);
+router.get(
+  "/statistic/",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  StatisticController.getAll
+);
+router.get(
+  "/statistic/owner",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  StatisticController.getAll
+);
 
-router.post("/rules", RuleController.create);
-router.get("/rules", RuleController.getAll);
-router.get("/rules/:id", RuleController.getById);
-router.put("/rules/:id", RuleController.update);
-
-// Facility
-// Kost
-router.post("/facilities/kost", FacilityController.createKostFacility);
-router.get("/facilities/kost", FacilityController.getAllKostFacilities);
-router.get("/facilities/kost/:id", FacilityController.getByIdKostFacility);
-router.put("/facilities/kost/:id", FacilityController.updateKostFacility);
-// Room
-router.post("/facilities/room", FacilityController.createRoomFacility);
-router.get("/facilities/room", FacilityController.getAllRoomFacilities);
-router.get("/facilities/room/:id", FacilityController.getByIdRoomFacility);
-router.put("/facilities/room/:id", FacilityController.updateRoomFacility);
+router.get(
+  "/transactions",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  TransactionController.getAll
+);
+router.get(
+  "/transactions/:id",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  TransactionController.getById
+);
+router.put(
+  "/transactions/:id",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  TransactionController.updateStatusById
+);
 
 module.exports = router;

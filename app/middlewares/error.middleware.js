@@ -9,9 +9,9 @@ const notFound = (req, res) => {
 
 const appError = (err, req, res, next) => {
   logger.error(err.message);
-  const errStatusCode = err.statusCode || 400;
+  const errstatus_code = err.status_code || 400;
   const errMessage = err.message || "Something went wrong";
-  res.status(errStatusCode).json({
+  res.status(errstatus_code).json({
     status: "error",
     message: errMessage,
     ...(process.env.NODE_ENV === "development" && { stack: err.stack }),

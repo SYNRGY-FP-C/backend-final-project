@@ -6,19 +6,18 @@ const { encrypt } = require("../../utils/bcrypt");
 const { generateOTP } = require("../../utils/generator");
 
 describe("Test API Verification", () => {
-  describe("POST /verify/request => Request OTP", () => {
-    let account;
-    beforeAll(async () => {
-      account = await Account.create({
-        email: faker.internet.email(),
-        phone: faker.phone.number(),
-        password: encrypt(faker.internet.password()),
-      });
+  let account;
+  beforeAll(async () => {
+    account = await Account.create({
+      email: faker.internet.email(),
+      phone: faker.phone.number(),
+      password: encrypt(faker.internet.password()),
     });
-
+  });
+  describe("POST /verify/request => Request OTP", () => {
     it("should respond with a 200 status code", async () => {
       await request(app)
-        .post("/api/verify/request")
+        .post("/v1/verify/request")
         .send({
           email: account.email,
         })
@@ -27,7 +26,7 @@ describe("Test API Verification", () => {
 
     it("should respond with a 200 status code", async () => {
       await request(app)
-        .post("/api/verify/request")
+        .post("/v1/verify/request")
         .send({
           phone: account.phone,
         })
@@ -35,14 +34,13 @@ describe("Test API Verification", () => {
     });
   });
 
-  describe("POST /verify/request => Request OTP", () => {
+  describe("POST /verify => Verify OTP", () => {
     it("should respond with a 200 status code", async () => {
-      const account = await Account.create({
+      account = await Account.create({
         email: faker.internet.email(),
         phone: faker.phone.number(),
         password: encrypt(faker.internet.password()),
       });
-
       const code = generateOTP();
       await OTP.create({
         token: encrypt(code),
@@ -50,7 +48,7 @@ describe("Test API Verification", () => {
       });
 
       await request(app)
-        .post("/api/verify")
+        .post("/v1/verify")
         .send({
           email: account.email,
           code: code,
@@ -72,7 +70,7 @@ describe("Test API Verification", () => {
       });
 
       await request(app)
-        .post("/api/verify")
+        .post("/v1/verify")
         .send({
           phone: account.phone,
           code: code,
