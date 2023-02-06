@@ -2,18 +2,10 @@ const { Kost, Account, UserProfile } = require("../models");
 
 const getAllKost = async (req, res, next) => {
   try {
-    const pageAsNumber = Number.parseInt(req.query.page);
-    const sizeAsNumber = Number.parseInt(req.query.size);
-    let page = 0;
-    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
-      page = pageAsNumber;
-    }
-    let size = 10;
-    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
-      size = sizeAsNumber;
-    }
+    const { page = 1, size = 30 } = req.query;
     const kosts = await Kost.findAll({
       attributes: [
+        "id",
         "kost_name",
         "indoor_photo_url",
         "kost_type",
@@ -36,20 +28,21 @@ const getAllKost = async (req, res, next) => {
           ],
         },
       ],
-      limit: size,
-      offset: page * size,
+      limit: Number(size),
+      offset: (Number(page) - 1) * Number(size),
       raw: true,
       nest: true,
     });
 
-    const result = kosts.map((account) => ({
-      kost_name: account.kost_name,
-      indoor_photo_url: account.indoor_photo_url,
-      kost_type: account.kost_type,
-      city: account.city,
-      province: account.province,
-      address: account.address,
-      owner: account.account.profile.fullname,
+    const result = kosts.map((kost) => ({
+      id: kost.id,
+      kost_name: kost.kost_name,
+      indoor_photo_url: kost.indoor_photo_url,
+      kost_type: kost.kost_type,
+      city: kost.city,
+      province: kost.province,
+      address: kost.address,
+      owner: kost.account.profile.fullname,
     }));
     return res.status(200).json({
       status: "success",
@@ -62,10 +55,11 @@ const getAllKost = async (req, res, next) => {
 };
 
 const getByIdKost = async (req, res, next) => {
-  const { kostId } = req.params;
+  const { id } = req.params;
   try {
-    const kost = await Kost.findByPk(kostId, {
+    const kost = await Kost.findByPk(id, {
       attributes: [
+        "id",
         "kost_name",
         "indoor_photo_url",
         "kost_type",
@@ -100,6 +94,7 @@ const getByIdKost = async (req, res, next) => {
     }
 
     const result = {
+      id: kost.id,
       kost_name: kost.kost_name,
       indoor_photo_url: kost.indoor_photo_url,
       kost_type: kost.kost_type,
@@ -124,7 +119,8 @@ const deleteKosts = async (req, res, next) => {
     const { kostId } = req.params;
     if (!kostId) {
       return res.status(404).json({
-        message: `Data ${kostId} not found!`,
+        status: "failed",
+        message: "Kost not found",
       });
     }
     await Kost.destroy({
@@ -134,7 +130,8 @@ const deleteKosts = async (req, res, next) => {
     });
 
     return res.status(200).json({
-      message: `Deleted data ID ${kostId}`,
+      status: "success",
+      message: "Kost deleted successfully!",
     });
   } catch (error) {
     next(error);

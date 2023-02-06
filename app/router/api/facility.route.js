@@ -3,6 +3,7 @@ const FacilityController = require("../../controllers/facility.controller");
 
 const router = express.Router();
 
-router.get("/", FacilityController.getAllKostFacilities);
+router.get("/", FacilityController.getAllRoomFacilities);
+router.get("/:id", FacilityController.getByIdRoomFacility);
 
 module.exports = router;

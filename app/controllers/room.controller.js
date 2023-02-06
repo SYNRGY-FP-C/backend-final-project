@@ -3,21 +3,12 @@ const Room = models.Room;
 
 const getAllRooms = async (req, res, next) => {
   try {
-    const pageAsNumber = Number.parseInt(req.query.page);
-    const sizeAsNumber = Number.parseInt(req.query.size);
-    let page = 0;
-    if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
-      page = pageAsNumber;
-    }
-    let size = 10;
-    if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
-      size = sizeAsNumber;
-    }
+    const { page = 1, size = 30 } = req.query;
 
     const rooms = await Room.findAll({
       attributes: ["id", "name", "label", "price"],
-      limit: size,
-      offset: page * size,
+      limit: Number(size),
+      offset: (Number(page) - 1) * Number(size),
     });
     return res.status(200).json({
       status: "success",
