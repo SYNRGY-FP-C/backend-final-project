@@ -12,7 +12,7 @@ const {
   isAuthorized,
   isAuthenticated,
 } = require("../../middlewares/auth.middleware");
-const { ROLE_SUPERADMIN, ROLE_ADMIN } = require("../../../constants/roles");
+const { ROLE_SUPERADMIN } = require("../../../constants/roles");
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -24,14 +24,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.use(
-  "/facilities",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction
-    ? isAuthorized([ROLE_SUPERADMIN, ROLE_ADMIN])
-    : (req, res, next) => next(),
-  facilityRoute
-);
+router.use("/facilities", facilityRoute);
 
 router.use(
   "/kost",
@@ -47,12 +40,7 @@ router.use(
   roomRoute
 );
 
-router.use(
-  "/rules",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  ruleRoute
-);
+router.use("/rules", ruleRoute);
 
 router.use(
   "/statistics",
