@@ -1,5 +1,4 @@
 const { Account, Role, AccountRoles, UserProfile } = require("../models");
-const { generateOTP } = require("../../utils/generator");
 
 const getAll = async (req, res, next) => {
   try {

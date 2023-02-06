@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Rule",
       tableName: "tbl_kost_rule",
-      timestamps:false,
+      timestamps: false,
     }
   );
   return Rule;

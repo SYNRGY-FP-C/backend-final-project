@@ -1,9 +1,12 @@
-const VerificationController = require("../../controllers/verification.controller");
-const UserController = require("../../controllers/user.controller");
-const RoomController = require("../../controllers/room.controller");
-const KostController = require("../../controllers/kost.controller");
-const StatisticController = require("../../controllers/statistic.controller");
-const TransactionController = require("../../controllers/transaction.controller");
+const express = require("express");
+const facilityRoute = require("./facility.route");
+const kostRoute = require("./kost.route");
+const roomRoute = require("./room.route");
+const ruleRoute = require("./rule.route");
+const statisticRoute = require("./statistic.route");
+const transactionRoute = require("./transaction.route");
+const userRoute = require("./user.route");
+const verificationRoute = require("./verification.route");
 
 const {
   isAuthorized,
@@ -13,8 +16,6 @@ const { ROLE_SUPERADMIN, ROLE_ADMIN } = require("../../../constants/roles");
 
 const isProduction = process.env.NODE_ENV === "production";
 
-const express = require("express");
-
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -23,104 +24,57 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/verify/request", VerificationController.request);
-router.post("/verify", VerificationController.verify);
-
-router.get(
-  "/users",
+router.use(
+  "/facilities",
   isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  UserController.getAll
-);
-router.get(
-  "/users/:id",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  UserController.getById
+  isProduction
+    ? isAuthorized([ROLE_SUPERADMIN, ROLE_ADMIN])
+    : (req, res, next) => next(),
+  facilityRoute
 );
 
-router.get(
-  "/statistic/",
+router.use(
+  "/kost",
   isProduction ? isAuthenticated : (req, res, next) => next(),
   isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  StatisticController.getAll
-);
-router.get(
-  "/statistic/owner",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  StatisticController.getAll
+  kostRoute
 );
 
-router.get(
+router.use(
+  "/rooms",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  roomRoute
+);
+
+router.use(
+  "/rules",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  ruleRoute
+);
+
+router.use(
+  "/statistics",
+  isProduction ? isAuthenticated : (req, res, next) => next(),
+  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
+  statisticRoute
+);
+
+router.use(
   "/transactions",
   isProduction ? isAuthenticated : (req, res, next) => next(),
   isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  TransactionController.getAll
-);
-router.get(
-  "/transactions/:id",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  TransactionController.getById
-);
-router.put(
-  "/transactions/:id",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  TransactionController.updateStatusById
+  transactionRoute
 );
 
-//Kamar
-router.get(
-  "/rooms",
+router.use(
+  "/users",
   isProduction ? isAuthenticated : (req, res, next) => next(),
   isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  RoomController.getAllRooms
-);
-router.post(
-  "/rooms",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  RoomController.storeRooms
-);
-router.get(
-  "/rooms/:roomId",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  RoomController.getByIdRooms
-);
-router.put(
-  "/rooms/:roomId",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  RoomController.UpdateRooms
-);
-router.delete(
-  "/rooms/:roomId",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  RoomController.deleteRooms
+  userRoute
 );
 
-//Kost
-router.get(
-  "/kosts",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  KostController.getAllKost
-);
-router.get(
-  "/kosts/:kostId",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  KostController.getByIdKost
-);
-router.delete(
-  "/kosts/:kostId",
-  isProduction ? isAuthenticated : (req, res, next) => next(),
-  isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
-  KostController.deleteKosts
-);
+router.use("/verify", verificationRoute);
 
 module.exports = router;

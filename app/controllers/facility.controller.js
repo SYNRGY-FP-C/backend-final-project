@@ -1,10 +1,9 @@
-const { KostFacility, RoomFacility } = require("../models")
+const { KostFacility, RoomFacility } = require("../models");
 
 const createKostFacility = async (req, res, next) => {
   const { facility_name, type } = req.body;
 
   try {
-
     if (!facility_name || !type) {
       res.status(400).json({
         status: "failed",
@@ -15,17 +14,17 @@ const createKostFacility = async (req, res, next) => {
 
     const data = await KostFacility.create({
       facility_name,
-      type
-    })
+      type,
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const createRoomFacility = async (req, res, next) => {
   const { facility_name, type, is_active } = req.body;
@@ -42,48 +41,48 @@ const createRoomFacility = async (req, res, next) => {
     const data = await RoomFacility.create({
       facility_name,
       type,
-      is_active
-    })
+      is_active,
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const getAllKostFacilities = async (req, res, next) => {
   try {
-    const data = await KostFacility.findAll()
+    const data = await KostFacility.findAll();
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 const getAllRoomFacilities = async (req, res, next) => {
   try {
-    const data = await RoomFacility.findAll()
+    const data = await RoomFacility.findAll();
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 const getByIdKostFacility = async (req, res, next) => {
-  const id = req.params.id
+  const id = req.params.id;
   try {
-    const data = await KostFacility.findByPk(id)
+    const data = await KostFacility.findByPk(id);
 
     if (!data) {
       res.status(404).json({
@@ -96,17 +95,17 @@ const getByIdKostFacility = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 const getByIdRoomFacility = async (req, res, next) => {
-  const id = req.params.id
+  const id = req.params.id;
   try {
-    const data = await RoomFacility.findByPk(id)
+    const data = await RoomFacility.findByPk(id);
 
     if (!data) {
       res.status(404).json({
@@ -119,10 +118,10 @@ const getByIdRoomFacility = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -130,9 +129,9 @@ const updateKostFacility = async (req, res, next) => {
   try {
     const { facility_name, type } = req.body;
     const id = req.params.id;
-    
-    const isIdFound = await KostFacility.findByPk(id) ? true : false
-    
+
+    const isIdFound = (await KostFacility.findByPk(id)) ? true : false;
+
     if (!isIdFound) {
       res.status(400).json({
         status: "failed",
@@ -140,7 +139,7 @@ const updateKostFacility = async (req, res, next) => {
       });
       return;
     }
-    
+
     if (!facility_name && !type) {
       res.status(400).json({
         status: "failed",
@@ -151,13 +150,13 @@ const updateKostFacility = async (req, res, next) => {
 
     await KostFacility.update(
       {
-        ...(facility_name && {facility_name:facility_name}),
-        ...(type && {type:type}),
+        ...(facility_name && { facility_name: facility_name }),
+        ...(type && { type: type }),
       },
       {
-        where: { id:id }
+        where: { id: id },
       }
-    )
+    );
 
     res.status(200).json({
       status: "success",
@@ -172,9 +171,9 @@ const updateRoomFacility = async (req, res, next) => {
   try {
     const { facility_name, type, is_active } = req.body;
     const id = req.params.id;
-    
-    const isIdFound = await RoomFacility.findByPk(id) ? true : false
-    
+
+    const isIdFound = (await RoomFacility.findByPk(id)) ? true : false;
+
     if (!isIdFound) {
       res.status(400).json({
         status: "failed",
@@ -182,7 +181,7 @@ const updateRoomFacility = async (req, res, next) => {
       });
       return;
     }
-    
+
     if (!facility_name && !type && is_active === null) {
       res.status(400).json({
         status: "failed",
@@ -193,14 +192,14 @@ const updateRoomFacility = async (req, res, next) => {
 
     await RoomFacility.update(
       {
-        ...(facility_name && {facility_name:facility_name}),
-        ...(type && {type:type}),
-        ...(is_active===null && {is_active:is_active}),
+        ...(facility_name && { facility_name: facility_name }),
+        ...(type && { type: type }),
+        ...(is_active === null && { is_active: is_active }),
       },
       {
-        where: { id:id }
+        where: { id: id },
       }
-    )
+    );
 
     res.status(200).json({
       status: "success",

@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "KostFacility",
       tableName: "tbl_kost_facility",
-      timestamps:false,
+      timestamps: false,
     }
   );
   return KostFacility;

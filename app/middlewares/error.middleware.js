@@ -7,7 +7,7 @@ const notFound = (req, res) => {
   });
 };
 
-const appError = (err, req, res, next) => {
+const appError = (err, req, res, _next) => {
   logger.error(err.message);
   const errstatus_code = err.status_code || 400;
   const errMessage = err.message || "Something went wrong";

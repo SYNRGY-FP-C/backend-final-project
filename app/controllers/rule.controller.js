@@ -1,10 +1,9 @@
-const { Rule } = require("../models")
+const { Rule } = require("../models");
 
 const create = async (req, res, next) => {
   const { description, rule } = req.body;
 
   try {
-
     if (!description || !rule) {
       res.status(400).json({
         status: "failed",
@@ -15,35 +14,35 @@ const create = async (req, res, next) => {
 
     const data = await Rule.create({
       description,
-      rule
-    })
+      rule,
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
-}
+};
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await Rule.findAll()
+    const data = await Rule.findAll();
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
 const getById = async (req, res, next) => {
-  const id = req.params.id
+  const id = req.params.id;
   try {
-    const data = await Rule.findByPk(id)
+    const data = await Rule.findByPk(id);
 
     if (!data) {
       res.status(404).json({
@@ -56,10 +55,10 @@ const getById = async (req, res, next) => {
     return res.status(200).json({
       status: "success",
       message: "OK",
-      data: data
-    })
+      data: data,
+    });
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
@@ -78,13 +77,13 @@ const update = async (req, res, next) => {
 
     await Rule.update(
       {
-        ...(description && {description:description}),
-        ...(rule && {rule:rule}),
+        ...(description && { description: description }),
+        ...(rule && { rule: rule }),
       },
       {
-        where: { id:id }
+        where: { id: id },
       }
-    )
+    );
 
     res.status(200).json({
       status: "success",
