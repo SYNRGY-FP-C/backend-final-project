@@ -40,7 +40,9 @@ const storeRooms = async (req, res, next) => {
       available_room,
       is_available,
       indoor_bathroom,
+      max_person,
       is_deleted,
+      label
     } = req.body;
 
     if (
@@ -56,7 +58,9 @@ const storeRooms = async (req, res, next) => {
       !quantity ||
       !available_room ||
       !indoor_bathroom ||
-      is_deleted
+      !max_person ||
+      !label
+      
     ) {
       return res.status(400).json({
         message: "Must be completed form data!",
@@ -79,6 +83,8 @@ const storeRooms = async (req, res, next) => {
       indoor_bathroom: indoor_bathroom,
       is_deleted: is_deleted,
       created_date: new Date(),
+      max_person: max_person,
+      label: label
     });
 
     return res.status(201).json({
@@ -207,7 +213,7 @@ const deleteRooms = async (req, res, next) => {
       },
     });
     return res.status(200).json({
-      message: `Deleted data ID ${roomId}`,
+      message: "Room Deleted Successfully!",
     });
   } catch (error) {
     next(error);

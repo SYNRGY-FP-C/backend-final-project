@@ -131,7 +131,7 @@ const deleteKosts = async (req, res, next) => {
 
     return res.status(200).json({
       status: "success",
-      message: "Kost deleted successfully!",
+      message: "Kost Deleted Successfully!",
     });
   } catch (error) {
     next(error);
