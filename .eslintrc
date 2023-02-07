@@ -4,10 +4,6 @@
     "es6": true,
     "node": true
   },
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
   "extends": ["eslint:recommended", "prettier"],
   "plugins": ["simple-import-sort", "unused-imports", "prettier"],
   "rules": {
