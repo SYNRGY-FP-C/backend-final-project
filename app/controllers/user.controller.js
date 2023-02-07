@@ -1,9 +1,8 @@
 const { Account, Role, AccountRoles, UserProfile } = require("../models");
-const { generateOTP } = require("../../utils/generator");
 
 const getAll = async (req, res, next) => {
   try {
-    const { page = 1, size = 5 } = req.query;
+    const { page = 1, size = 30 } = req.query;
     const users = await Account.findAll({
       attributes: ["id", "email", "phone"],
       include: [
@@ -33,8 +32,8 @@ const getAll = async (req, res, next) => {
           ],
         },
       ],
-      limit: size,
-      offset: page * size,
+      limit: Number(size),
+      offset: (Number(page) - 1) * Number(size),
       raw: true,
       nest: true,
     });
