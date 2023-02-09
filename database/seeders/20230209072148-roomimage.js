@@ -1,7 +1,9 @@
-/* eslint-disable unused-imports/no-unused-vars */
 "use strict";
 
-const { generateKosts } = require("../../utils/sedeers");
+const { generateImages } = require("../../utils/sedeers");
+const { Room } = require("../../app/models");
+const Sequelize = require("sequelize");
+const { fn, col } = Sequelize;
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -15,7 +17,17 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("tbl_kost", generateKosts(1), {});
+
+    const { latestId } = await Room.findOne({
+      attributes: [[fn("MAX", col("id")), "latestId"]],
+      raw: true,
+    });
+    console.log(latestId);
+    await queryInterface.bulkInsert(
+      "room_image",
+      generateImages(latestId, 2),
+      {}
+    );
   },
 
   async down(queryInterface, Sequelize) {

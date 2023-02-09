@@ -15,7 +15,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert("tbl_room", generateRooms(10), {});
+    await queryInterface.bulkInsert("tbl_room", generateRooms(2), {});
   },
 
   async down(queryInterface, Sequelize) {

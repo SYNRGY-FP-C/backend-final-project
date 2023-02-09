@@ -104,7 +104,15 @@ const generateRooms = (length) => {
   }));
 };
 
+const generateImages = (latestId, length) => {
+  return Array.from({ length: length }).map((_, index) => ({
+    room_id: latestId - length + index + 1,
+    image_url: faker.image.imageUrl(1280, 720, "apartment"),
+  }));
+};
+
 module.exports = {
   generateKosts,
   generateRooms,
+  generateImages,
 };
