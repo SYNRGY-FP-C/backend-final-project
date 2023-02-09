@@ -1,6 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
 "use strict";
 
+const { generateKosts } = require("../../utils/sedeers");
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -13,6 +15,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
+    await queryInterface.bulkInsert("tbl_kost", generateKosts(10), {});
   },
 
   async down(queryInterface, Sequelize) {
