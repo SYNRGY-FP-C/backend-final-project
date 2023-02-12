@@ -3,7 +3,7 @@ const { Account, Role, AccountRoles } = require("../models");
 
 const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = req?.headers?.authorization?.split(" ")[1];
     if (!token) {
       const error = new Error("Unauthenticated");
       error.status_code = 401;
