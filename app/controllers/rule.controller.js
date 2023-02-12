@@ -94,9 +94,37 @@ const update = async (req, res, next) => {
   }
 };
 
+const remove = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const isExist = await Rule.findByPk(id);
+
+    if (!isExist) {
+      res.status(404).json({
+        status: "failed",
+        message: "ID is not found!",
+      });
+      return;
+    }
+
+    await Rule.destroy({
+      where: { id: id },
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Rule has been deleted",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };

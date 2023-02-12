@@ -210,6 +210,35 @@ const updateRoomFacility = async (req, res, next) => {
   }
 };
 
+const deleteRoomFacility = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const isIdFound = (await RoomFacility.findByPk(id)) ? true : false;
+
+    if (!isIdFound) {
+      res.status(400).json({
+        status: "failed",
+        message: "Facility ID is not found!",
+      });
+      return;
+    }
+
+    await RoomFacility.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(200).json({
+      status: "success",
+      message: "Room Facility has been deleted",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   // Kost
   createKostFacility,
@@ -221,4 +250,5 @@ module.exports = {
   getAllRoomFacilities,
   getByIdRoomFacility,
   updateRoomFacility,
+  deleteRoomFacility,
 };

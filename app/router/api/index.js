@@ -26,6 +26,8 @@ router.get("/", (req, res) => {
 
 router.use("/facilities", facilityRoute);
 
+router.use("/rules", ruleRoute);
+
 router.use(
   "/kost",
   isProduction ? isAuthenticated : (req, res, next) => next(),
@@ -39,8 +41,6 @@ router.use(
   isProduction ? isAuthorized([ROLE_SUPERADMIN]) : (req, res, next) => next(),
   roomRoute
 );
-
-router.use("/rules", ruleRoute);
 
 router.use(
   "/statistics",
