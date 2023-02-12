@@ -68,7 +68,11 @@ const getAllKostFacilities = async (req, res, next) => {
 
 const getAllRoomFacilities = async (req, res, next) => {
   try {
-    const data = await RoomFacility.findAll();
+    const { page = 1, size = 30 } = req.query;
+    const data = await RoomFacility.findAll({
+      limit: Number(size),
+      offset: (Number(page) - 1) * Number(size),
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",

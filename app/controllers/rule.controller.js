@@ -28,7 +28,11 @@ const create = async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await Rule.findAll();
+    const { page = 1, size = 30 } = req.query;
+    const data = await Rule.findAll({
+      limit: Number(size),
+      offset: (Number(page) - 1) * Number(size),
+    });
     return res.status(200).json({
       status: "success",
       message: "OK",

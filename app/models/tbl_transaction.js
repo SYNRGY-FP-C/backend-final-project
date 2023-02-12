@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Account, {
+        foreignKey: "account_id",
+        as: "account",
+      });
     }
   }
   Transaction.init(
@@ -26,11 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       status: DataTypes.STRING,
       transaction_date: DataTypes.DATE,
       url_document: DataTypes.STRING,
-      account_id: DataTypes.INTEGER,
       payment_id: DataTypes.INTEGER,
       room_kost_id: DataTypes.INTEGER,
       addons_feature_price: DataTypes.FLOAT,
       payment_scheme: DataTypes.STRING,
+      payment_proof: DataTypes.STRING,
       addons_facilities_price: DataTypes.FLOAT,
     },
     {
