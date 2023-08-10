@@ -11,7 +11,7 @@ const start = async () => {
       "⚡️[database]: Database connection has been established successfully."
     );
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0',() => {
       logger.info(`⚡️[server]: Server is running at http://localhost:${PORT}`);
     });
   } catch (error) {
